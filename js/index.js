@@ -142,11 +142,11 @@ $(document).ready(function () {
     //left diagonal checking
     is_win = false;
     for (var i = winning_condition-1; i < board_size; i++) {
-      for (var j = i; j <= board_size - winning_condition + (i*board_size); j+=board_size){
+      for (var j = i; j <= (board_size - winning_condition) * board_size +i ; j+=board_size){
+        console.log(board_size - winning_condition + (i*board_size));
 
         if (board[j].classList.contains(player)){
           is_win = true;
-          console.log(j+((winning_condition-1) * (board_size-1)));
           for (var w = j+board_size-1; w <= j+((winning_condition-1) * (board_size-1)); w+=(board_size-1)) {
             if (!board[w].classList.contains(player)) {
               is_win = false;
