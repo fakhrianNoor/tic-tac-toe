@@ -1,56 +1,63 @@
 <!DOCTYPE html>
-<html lang="en" >
+<html lang="en">
 
 <head>
   <meta charset="UTF-8">
   <title>Tic Tac Toe game</title>
-  
-  
+
+
   <link rel='stylesheet prefetch' href='https://getbootstrap.com/2.3.2/assets/css/bootstrap.css'>
 
-      <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css">
 
-  
+
 </head>
 
 <body>
 
   <div id="tic-tac-toe">
-<div class="span3 new_span">
-<div class="row">
-<h1 class="span3">Tic Tac Toe</h1>
-<div class="span3">
-<div class="input-prepend input-append">
-    <span class="add-on win_text">O won</span><strong id="o_win" class="win_times add-on">0</strong><span class="add-on">time(s)</span>
-    </div>
-    <div class="input-prepend input-append">
-    <span class="add-on win_text">X won</span><strong id="x_win" class="win_times add-on">0</strong><span class="add-on">time(s)</span>
-    </div>
-      
-</div>
+    <div class="span3 new_span">
+      <div class="row">
+        <h1 class="span3">Tic Tac Toe</h1>
+        <div class="span3">
+          <div class="input-prepend input-append">
+            <span class="add-on win_text">O won</span><strong id="o_win" class="win_times add-on">0</strong><span class="add-on">time(s)</span>
+          </div>
+          <div class="input-prepend input-append">
+            <span class="add-on win_text">X won</span><strong id="x_win" class="win_times add-on">0</strong><span class="add-on">time(s)</span>
+          </div>
+
+        </div>
 
 
-    
-</div>
-<ul class="row" id="game">
-<li id="board_0" class="btn span1">+</li>
-<li id="board_1" class="btn span1" >+</li>
-<li id="board_2" class="btn span1">+</li>
-<li id="board_3" class="btn span1">+</li>
-<li id="board_4" class="btn span1">+</li>
-<li id="board_5" class="btn span1">+</li>
-<li id="board_6" class="btn span1">+</li>
-<li id="board_7" class="btn span1">+</li>
-<li id="board_8" class="btn span1">+</li>
-</ul>
-<div class="clr">&nbsp;</div>
-<div class="row"><a href="#" id="reset" class="btn-success btn span3" >Restart</a></div></div>
-</div>
+
+      </div>
+      <ul class="row" id="game">
+        <li id="board_0" class="btn span1">+</li>
+        <li id="board_1" class="btn span1">+</li>
+        <li id="board_2" class="btn span1">+</li>
+        <li id="board_3" class="btn span1">+</li>
+        <li id="board_4" class="btn span1">+</li>
+        <li id="board_5" class="btn span1">+</li>
+        <li id="board_6" class="btn span1">+</li>
+        <li id="board_7" class="btn span1">+</li>
+        <li id="board_8" class="btn span1">+</li>
+      </ul>
+      <div class="clr">&nbsp;</div>
+      <div class="row">
+        <p class="text-center">
+          <label for="board_size">Board size:</label><input type="number" min="3" max="30" value="3" id="board_size">
+          <label for="win_condition">Win condition:</label><input type="number" min="3" max="3" value="3" id="win_condition">
+        </p>
+        <a href="#" id="reset" class="btn-success btn span3">Restart</a>
+      </div>
+    </div>
+  </div>
   <script src='https://code.jquery.com/jquery-1.7.2.min.js'></script>
 
-  
 
-    <script  src="js/index.js"></script>
+
+  <script src="js/index.js"></script>
 
 
 

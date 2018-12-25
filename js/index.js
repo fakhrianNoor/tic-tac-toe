@@ -5,13 +5,29 @@ $(document).ready(function () {
   var count = 0;
   var o_win = 0;
   var x_win = 0;
-  var board_size = 3; //the size of the board in n x n 
-  var winning_condition = 3; //the amount of concurrent marks that need to filled to determined the winner
+  var board_size = parseInt($('#board_size').val()); //the size of the board in n x n 
+  var win_condition = parseInt($('#win_condition').val()); //the amount of concurrent marks that need to filled to determined the winner
 
   var board = $('.btn.span1');
   var t = 'x';
 
   $('#game li').click(function () {
+    turn($(this));
+  });
+
+  $('#board_size').change(function() {
+    $('#win_condition').attr('max', $('#board_size').val());
+  });
+
+  $("#reset").click(function () {
+    board_size = parseInt($('#board_size').val());
+    win_condition = parseInt($('#win_condition').val());
+    init_board();
+    
+  });
+
+
+  function turn(button){
     if (is_winner('o')) {
       alert('O has won the game. Start a new game')
       $("#game li").text("+");
@@ -40,13 +56,13 @@ $(document).ready(function () {
       $("#game li").removeClass('btn-info')
       count = 0
     }
-    else if ($(this).hasClass('disable')) {
+    else if (button.hasClass('disable')) {
       alert('Already selected')
     }
     else if (count % 2 == 0) {
       count++
-      $(this).text(o)
-      $(this).addClass('disable o btn-primary')
+      button.text(o)
+      button.addClass('disable o btn-primary')
       if (is_winner('o')) {
         alert('O wins')
         count = 0
@@ -56,8 +72,8 @@ $(document).ready(function () {
     }
     else {
       count++
-      $(this).text(x)
-      $(this).addClass('disable x btn-info')
+      button.text(x)
+      button.addClass('disable x btn-info')
       if (is_winner('x')) {
         alert('X wins')
         count = 0
@@ -65,19 +81,28 @@ $(document).ready(function () {
         $('#x_win').text(x_win)
       }
     }
+  }
 
-  });
   
-  $("#reset").click(function () {
-    $("#game li").text("+");
-    $("#game li").removeClass('disable')
-    $("#game li").removeClass('o')
-    $("#game li").removeClass('x')
-    $("#game li").removeClass('btn-primary')
-    $("#game li").removeClass('btn-info')
-    count = 0
+  function init_board() {
+    var board_html = '';
 
-  });
+    for (var i = 0; i < board_size * board_size; i++) {
+      board_html += '<li id="board_' + i + '" class="btn span1">+</li>';
+    }
+
+    board_width = 246 + (82 * (board_size - 3));
+    board_margin_left = 20 + (40 * (board_size - 3));
+    $('#game').css({ "width": board_width + "px", "margin-left": "-" + board_margin_left + "px" });
+    $('#game').html(board_html);
+
+    count = 0;
+    board = $('.btn.span1');
+    $('#game li').click(function () {
+      turn($(this));
+    });
+  }
+
 
 
   function is_winner(player) {
@@ -85,16 +110,17 @@ $(document).ready(function () {
 
     //row checking
     for (var i = 0; i < board_size; i++) {
-      for (var j = i*board_size; j < (i*board_size)+board_size; j++) {
-          if (board[j].classList.contains(player) && j + winning_condition <= (i*board_size)+board_size) {
+      for (var j = i * board_size; j < (i * board_size) + board_size; j++) {
+        s=(i * board_size) + board_size;
+        if (board[j].classList.contains(player) && j + win_condition <= (i * board_size) + board_size) {
           is_win = true;
-          for (var w = j+1; w < j+winning_condition; w++) {
+          for (var w = j + 1; w < j + win_condition; w++) {
             if (!board[w].classList.contains(player)) {
               is_win = false;
               break;
             }
           }
-          if(is_win)
+          if (is_win)
             return true;
         }
       }
@@ -103,16 +129,16 @@ $(document).ready(function () {
     //collumn checking
     is_win = false;
     for (var i = 0; i < board_size; i++) {
-      for (var j = i; j < ((board_size-1)*board_size)+i; j+=board_size) {
-        if (board[j].classList.contains(player) && j+((winning_condition-1)*board_size) <=  ((board_size-1)*board_size)+i) {
+      for (var j = i; j < ((board_size - 1) * board_size) + i; j += board_size) {
+        if (board[j].classList.contains(player) && j + ((win_condition - 1) * board_size) <= ((board_size - 1) * board_size) + i) {
           is_win = true;
-          for (var w = j+board_size; w <= j+((winning_condition-1)*board_size); w+=board_size) {
+          for (var w = j + board_size; w <= j + ((win_condition - 1) * board_size); w += board_size) {
             if (!board[w].classList.contains(player)) {
               is_win = false;
               break;
             }
           }
-          if(is_win)
+          if (is_win)
             return true;
         }
       }
@@ -121,19 +147,18 @@ $(document).ready(function () {
 
     //right diagonal checking
     is_win = false;
-    for (var i = 0; i <= board_size - winning_condition; i++) {
-      for (var j = i; j <= board_size - winning_condition + (i*board_size); j+=board_size){
+    for (var i = 0; i <= board_size - win_condition; i++) {
+      for (var j = i; j <= board_size - win_condition + (i * board_size); j += board_size) {
 
-        if (board[j].classList.contains(player)){
+        if (board[j].classList.contains(player)) {
           is_win = true;
-          for (var w = j+board_size+1; w <= j+((winning_condition-1) * (board_size+1)); w+=(board_size+1)) {
-            console.log(board[w]);
+          for (var w = j + board_size + 1; w <= j + ((win_condition - 1) * (board_size + 1)); w += (board_size + 1)) {
             if (!board[w].classList.contains(player)) {
               is_win = false;
               break;
             }
           }
-          if(is_win)
+          if (is_win)
             return true;
         }
       }
@@ -141,19 +166,18 @@ $(document).ready(function () {
 
     //left diagonal checking
     is_win = false;
-    for (var i = winning_condition-1; i < board_size; i++) {
-      for (var j = i; j <= (board_size - winning_condition) * board_size +i ; j+=board_size){
-        console.log(board_size - winning_condition + (i*board_size));
+    for (var i = win_condition - 1; i < board_size; i++) {
+      for (var j = i; j <= (board_size - win_condition) * board_size + i; j += board_size) {
 
-        if (board[j].classList.contains(player)){
+        if (board[j].classList.contains(player)) {
           is_win = true;
-          for (var w = j+board_size-1; w <= j+((winning_condition-1) * (board_size-1)); w+=(board_size-1)) {
+          for (var w = j + board_size - 1; w <= j + ((win_condition - 1) * (board_size - 1)); w += (board_size - 1)) {
             if (!board[w].classList.contains(player)) {
               is_win = false;
               break;
             }
           }
-          if(is_win)
+          if (is_win)
             return true;
         }
       }
